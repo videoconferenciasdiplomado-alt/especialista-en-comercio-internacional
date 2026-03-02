@@ -1,0 +1,1617 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <style>
+      /* Estilos de balanceo de texto */
+      .header-content-box,
+      .header-compact-title,
+      .footer,
+      .section-title,
+      .subsection-title {
+        text-wrap: balance;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      :root {
+        /* Colores Principales del Diseño (Acentos y Degradados) */
+        /* ======================================================= */
+        --color-principal: #00beff; /* Cian Brillante para acentos, bordes y el inicio del degradado principal */
+        --color-secundario: #1e50cd; /* Azul Medio, parte final del degradado de acento */
+
+        /* Fondos Oscuros de la Interfaz */
+        /* ======================================================= */
+        --fondo-oscuro-claro: #002a52; /* Fondo de secciones y contenido */
+        --fondo-oscuro-fuerte: #001a33; /* Fondo del encabezado (header) y pie de página (footer) */
+        /* ======================================================= */
+        --fondo-oscuro-medio: #003366; /* Fondo de encabezados y cajas de contenido */
+        --fondo-borde-claro: #004080; /* Bordes ligeros y color de fondo al hacer hover en encabezados */
+        --fondo-sombra-azul-header: #0050a0; /* ¡NUEVO! Sombra en el header */
+
+        /* Colores de Texto y Fondo General del Body */
+        /* ======================================================= */
+        --texto-blanco-1: #ffffff; /* Blanco puro para títulos y texto en fondo muy oscuro */
+        --texto-claro-2: #e6e6e6; /* Texto principal y claro */
+        --texto-medio-3: #cccccc; /* Texto de contenido de item (un poco más tenue) */
+
+        /* ======================================================= */
+        --fondo-body-inicio: #99e5ff; /* Color de inicio del degradado de fondo del body */
+        --fondo-body-fin: #a5b9eb; /* Color de final del degradado de fondo del body */
+
+        /* Colores de Acento Específicos (YouTube, Búsqueda) */
+        /* ======================================================= */
+        --rojo-youtube-claro: #e60000;
+        --rojo-youtube-fuerte: #a30000;
+        --timestamp-youtube: #ffcccc;
+        --fondo-resaltado: #00c339; /* Verde para el fondo del texto buscado */
+
+        /* Bases RGB para Transparencias (RGBA) */
+        /* ======================================================= */
+        --sombra-rgb: 0, 0, 0; /* Negro puro: Usado para sombras generales y profundidad */
+        --acento-rgb: 0, 190, 255; /* Cian Brillante: Usado para brillos y sombras de acento */
+        --rojo-rgb: 230, 0, 0; /* Rojo Puro: Usado para sombras de enlaces de YouTube */
+        /* ======================================================= */
+        --gradient-principal: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--fondo-body-inicio) 0%, var(--fondo-body-fin) 100%);
+        line-height: 1.2;
+        scroll-behavior: smooth;
+      }
+
+      strong#tituloDiplomado {
+        font-weight: 900;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @keyframes slideDownSutil {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header.animacion-inicial {
+        animation: slideDownSutil 0.4s ease-out 1;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        box-shadow: 0 5px 15px rgba(var(--sombra-rgb), 0.5);
+        text-align: center;
+        will-change: transform;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header-text-box {
+        display: grid;
+        gap: 10px;
+        word-break: break-word;
+        margin: 0 15px;
+      }
+
+      .header.compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+      }
+
+      .header-spacer {
+        display: none;
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header.compact + .header-spacer {
+        display: block;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .header.compact .header-top {
+        display: none;
+      }
+
+      .logo {
+        width: 140px;
+        height: auto;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+      }
+
+      .header.compact .logo {
+        width: 90px;
+        margin: 0 10px;
+      }
+
+      .header .logo.compact-logo {
+        display: none;
+      }
+
+      .header.compact .logo.compact-logo {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 900;
+      }
+
+      .header.compact h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+      }
+
+      .header-content-box {
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 20px 20px;
+        box-shadow: 0 8px 20px rgba(var(--acento-rgb), 0.6);
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        opacity: 1;
+        transform: translateY(0);
+        will-change: transform;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .header-content-box {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: 0;
+        transform: translateY(-10px);
+      }
+
+      .header-content-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(var(--acento-rgb), 0.8);
+      }
+
+      .header-bottom-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header-second-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header.compact .header-bottom-row {
+        flex-grow: 1;
+      }
+
+      .logo-and-title {
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .logo-and-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .header.compact .header-bottom-row .logo-and-title {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        gap: 10px;
+      }
+
+      .header.compact .header-bottom-row .logo-and-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .header-compact-title {
+        display: none;
+        color: var(--texto-blanco-1);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 10px;
+        white-space: normal;
+      }
+
+      .header.compact .header-compact-title {
+        display: block;
+      }
+
+      .search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--fondo-oscuro-medio);
+        border: 2px solid var(--fondo-borde-claro);
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(var(--sombra-rgb), 0.25);
+        will-change: border-color, background-color;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+
+      .search-bar:focus-within {
+        border-color: var(--fondo-sombra-azul-header);
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .clear-search {
+        cursor: pointer;
+        color: var(--texto-claro-2);
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        display: none;
+        transition: color 0.2s ease;
+        transform: scale(1.5);
+      }
+
+      .clear-search:hover {
+        color: var(--texto-blanco-1);
+      }
+
+      .search-bar input {
+        flex-grow: 1;
+        padding: 10px 18px;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--texto-claro-2);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        min-width: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header.compact .search-bar input {
+        padding: 10px 20px;
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-button {
+        background: var(--gradient-principal);
+        border: none;
+        color: var(--texto-blanco-1);
+        padding: 8px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        will-change: transform;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        max-width: 150px;
+        white-space: normal;
+      }
+
+      .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .search-bar .action-button {
+        margin: 5px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes fadeInUpContent {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .mind-map {
+        transition: margin-top 0.4s ease;
+        margin: 50px 0;
+      }
+
+      .mind-map.animacion-contenido {
+        animation: fadeInUpContent 0.4s ease-out 1 forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background-color: var(--fondo-oscuro-claro);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-oscuro-medio);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(var(--sombra-rgb), 0.25);
+        transition: border-color 0.3s ease;
+      }
+
+      .section-header {
+        padding: 20px;
+        background-color: var(--fondo-oscuro-medio);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .section-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 15px;
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        color: var(--texto-claro-2);
+        will-change: transform;
+        transition: transform 0.3s ease;
+      }
+
+      .section.active > .section-header .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .section.active .section-content {
+        max-height: fit-content;
+        padding-bottom: 10px;
+        opacity: 1;
+      }
+
+      .subsection {
+        margin: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-borde-claro);
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .subsection:hover {
+        border-color: var(--fondo-sombra-azul-header);
+      }
+
+      .subsection:hover .subsection-header {
+        background-color: var(--fondo-sombra-azul-header);
+      }
+
+      .section:hover {
+        border-color: var(--fondo-borde-claro);
+      }
+
+      .section:hover .section-header {
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .subsection-header {
+        padding: 15px;
+        background-color: var(--fondo-borde-claro);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .subsection-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .subsection-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .subsection-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--fondo-oscuro-claro);
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .subsection.active .subsection-content {
+        max-height: fit-content;
+        padding: 15px;
+        opacity: 1;
+      }
+
+      .subsection.active .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .content-item {
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border-left: 4px solid var(--color-principal);
+        box-shadow: 0 1px 5px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .content-text {
+        color: var(--texto-medio-3);
+        margin-bottom: 5px;
+        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 500;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .content-text::before {
+        content: "•";
+        color: var(--color-principal);
+        font-weight: 700;
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+      }
+
+      .youtube-link {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, var(--rojo-youtube-claro) 0%, var(--rojo-youtube-fuerte) 100%);
+        color: var(--texto-blanco-1);
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(var(--rojo-rgb), 0.4);
+        will-change: transform;
+      }
+
+      .youtube-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 7.5px rgba(var(--rojo-rgb), 0.5);
+        will-change: transform;
+      }
+
+      .timestamp {
+        color: var(--timestamp-youtube);
+        font-size: 0.85rem;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+
+      .highlight {
+        background-color: var(--fondo-resaltado);
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+        padding: 4px;
+        border-radius: 6px;
+      }
+
+      .footer {
+        padding: 30px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        border-top: 1px solid var(--fondo-oscuro-medio);
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .footer-text {
+        color: var(--texto-claro-2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+        }
+
+        .logo {
+          margin: 0;
+        }
+
+        .header-text-box {
+          margin: 0;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
+        }
+
+        .header.compact .header-bottom-row .logo-and-title {
+          gap: 5px;
+        }
+        .logo,
+        .footer-logo {
+          width: 105px;
+        }
+
+        .header.compact .header-bottom-row {
+          flex-direction: column;
+        }
+
+        .header.compact .header-compact-title {
+          margin: 0 5px;
+          font-size: 0.8rem;
+        }
+
+        .header.compact .logo.compact-logo {
+          width: 65px;
+          margin: 5px;
+        }
+
+        .action-button,
+        .search-bar input,
+        .clear-search {
+          font-size: 0.9rem;
+        }
+
+        .section-header {
+          padding: 15px;
+        }
+
+        .header.compact .controls {
+          flex-direction: row;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .subsection-title {
+          font-size: 1rem;
+        }
+        .section-number,
+        .subsection-number {
+          font-size: 13px;
+        }
+
+        .content-text {
+          font-size: 0.9rem;
+        }
+
+        .youtube-link {
+          font-size: 0.8rem;
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+        }
+
+        .header.compact .action-button {
+          padding: 6px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header animacion-inicial">
+      <div class="header-content-box">
+        <div class="header-top">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo" />
+          </a>
+          <div class="header-text-box">
+            <h1>
+              <div>DIPLOMADO DE ALTA ESPECIALIZACIÓN EN</div>
+              <strong id="tituloDiplomado" style="display: block"></strong>
+            </h1>
+            <p id="tituloPrincipal"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-bottom-row">
+        <div class="logo-and-title">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo compact-logo" />
+          </a>
+          <span class="header-compact-title" id="tituloCompacto"></span>
+        </div>
+        <div class="header-second-row">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar en el resumen interactivo…" autocomplete="off" />
+            <div class="search-actions">
+              <span class="clear-search" onclick="clearSearch()">&times;</span>
+              <button class="action-button" onclick="searchContent()">Buscar</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="action-button" onclick="expandAll()">Mostrar todo</button>
+            <button class="action-button" onclick="collapseAll()">Colapsar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="container">
+      <div class="mind-map animacion-contenido" id="mindMap">
+        <div class="section" data-section="1">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">1</span>
+              <span class="section-title">Perfil del docente y expectativas de los alumnos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.1</span>
+                  <span class="subsection-title">Bienvenida e introducción del docente</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Saludo a los estudiantes y explicación de la sesión: Invitación a usar chat y levantar la mano para dudas. Monitor apoyará con consultas.</div>
+                  <div class="content-text">Objetivos generales de la sesión: Búsqueda de proveedores de insumos/materias primas. Procedimiento de importación y gestión aduanera. Tributos aduaneros, entidades y agentes involucrados.</div>
+                  <div class="content-text">Metodología y dinámica del curso: Clase teórica combinada con práctica y ejercicios en grupo. Formación de 2 grupos para desarrollar un proceso de importación/exportación.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=52" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:00:52)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.2</span>
+                  <span class="subsection-title">Experiencia del docente</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Formación y áreas de trabajo: Ingeniero industrial con experiencia en consumo masivo, logística e importación de medicamentos. Experiencia en minería y seguridad logística.</div>
+                  <div class="content-text">Actividad docente y formación complementaria: Docencia en negocios internacionales, administración y logística. Cursos en ingeniería financiera y herramientas ofimáticas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=869" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:14:29)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.3</span>
+                  <span class="subsection-title">Presentaciones y expectativas de estudiantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Diversidad de perfiles en la clase: Estudiantes y profesionales en negocios internacionales, contabilidad, ingeniería, administración y organización de eventos. Interés en reforzar teoría y práctica de importaciones y aduanas.</div>
+                  <div class="content-text">Solicitud de participación y roles en grupos: Presentaciones breves: nombre, dedicación y expectativas. Voluntariedad para liderar/coordinar según experiencia previa.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=1071" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:17:51)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="2">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">2</span>
+              <span class="section-title">Búsqueda y selección de proveedores internacionales</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.1</span>
+                  <span class="subsection-title">Conceptos iniciales y preguntas clave</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Interrogantes para decidir importación: Conocer el producto y su subpartida arancelaria. Determinar impuestos aplicables, restricciones y demanda nacional. Verificar si aplica beneficio arancelario.</div>
+                  <div class="content-text">Ejemplo práctico mencionado: Caso de importación de medicamentos (factores de coagulación) para licitaciones públicas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=1861" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:31:01)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.2</span>
+                  <span class="subsection-title">Criterios para evaluar proveedores</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Criterios principales: precio, calidad y capacidad de suministro: Prioridad variable según tipo de producto y volumen.</div>
+                  <div class="content-text">Plazos de entrega y reputación: Evaluación de al menos tres proveedores; ventaja para tiempos más cortos. Comprobar reputación y experiencias previas del proveedor.</div>
+                  <div class="content-text">Localización y postventa: Considerar restricciones del país de origen y logística. Servicios de capacitación, visitas técnicas o soporte postventa.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=2291" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:38:11)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="3">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">3</span>
+              <span class="section-title">Plataformas, costos y conceptos aduaneros básicos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.1</span>
+                  <span class="subsection-title">Plataformas para buscar proveedores y mercado</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Plataformas mencionadas: Alibaba, HKTDC, Aliexpress, Temu, Trade Map, Veritrade. Uso para búsqueda de proveedores y análisis de comercio internacional.</div>
+                  <div class="content-text">Uso práctico y ejemplos: Compras personales y uso implícito de Incoterms en transacciones cotidianas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=2581" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:43:01)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.2</span>
+                  <span class="subsection-title">Costos involucrados en una importación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Componentes principales de costo: Precio del producto. Flete internacional y seguro. Transporte interno en origen y destino.</div>
+                  <div class="content-text">Costos y agentes asociados: Tributos aduaneros y agencias de aduanas para gestiones. Importancia de cotizar correctamente y trabajar con agentes de carga.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=2856" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:47:36)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.3</span>
+                  <span class="subsection-title">Conceptos aduaneros y tributarios</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Diferencia entre arancel e impuesto: Arancel: tipo de impuesto aplicado exclusivamente al comercio internacional. Impuestos: cargos generales aplicables a compras en general.</div>
+                  <div class="content-text">Tipos de tasas aduaneras mencionadas: Advaloren y ISC como ejemplos de tasas aplicables a importaciones.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=2744" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:45:44)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="4">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">4</span>
+              <span class="section-title">Regímenes aduaneros, normativa e instrumentos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.1</span>
+                  <span class="subsection-title">Regímenes aduaneros principales</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Categorías de regímenes según la Ley General de Aduanas: Importación, exportación, perfeccionamiento, depósito aduanero, tránsito y regímenes especiales/ excepción.</div>
+                  <div class="content-text">Regímenes de uso frecuente y objetivo del curso: Importación y exportación como regímenes comunes. Perfeccionamiento (drawback) como objetivo práctico del ejercicio del curso.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=3314" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:55:14)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.2</span>
+                  <span class="subsection-title">Drawback y su propósito</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Concepto y utilidad: Régimen de perfeccionamiento que devuelve impuestos pagados a empresas exportadoras. Permite recuperar parte de costos de importación cuando la mercancía se usa para producir bienes exportables.</div>
+                  <div class="content-text">Aplicación práctica en la dinámica del curso: Ejercicio propuesto: importar insumo, integrarlo a un producto local y exportarlo acogiendo drawback.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=2215" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:36:55)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.3</span>
+                  <span class="subsection-title">Evolución normativa, documentos y jerarquía legal</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Documentos aduaneros relevantes: Transición de DUA (Declaración Única de Aduanas) a DAN (Declaración de Mercancías). Ejemplo: primera DAN de importación en Chancay y consulta de autorización de levante por número de DUA/DAN.</div>
+                  <div class="content-text">Jerarquía normativa en materia aduanera: Constitución → Ley General de Aduanas (Ley 1053) → Decretos supremos → Resoluciones ministeriales → Resoluciones de superintendencia.</div>
+                  <div class="content-text">Modernización y digitalización: Objetivo de digitalizar y alinear procesos con recomendaciones internacionales para reducir tiempos y costos.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=3141" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:52:21)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="5">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">5</span>
+              <span class="section-title">Temas pedagógicos, herramientas y cierre de la sesión</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.1</span>
+                  <span class="subsection-title">Saberes previos y habilidades recomendadas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Conocimientos útiles para el curso: Contabilidad y tributación básica aplicada al comercio exterior. Conceptos de despacho aduanero y regímenes aduaneros.</div>
+                  <div class="content-text">Idiomas y nuevas tecnologías: Inglés como idioma prioritario; otros idiomas (chino, portugués) como plus. Uso de inteligencia artificial y herramientas digitales para facilitar tareas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=1744" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:29:04)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.2</span>
+                  <span class="subsection-title">Organización de trabajo y próximos pasos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Dinámica de trabajo en clases siguientes: Integración de teoría y práctica mediante ejercicios grupales sobre procesos de importación/exportación. Entrega de materiales y ejemplos prácticos por el docente.</div>
+                  <div class="content-text">Participación y evaluación: Se espera participación por chat y micrófono. Existirá evaluación escrita, pero también actividad práctica y colaborativa en grupos.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=1531" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:25:31)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="6">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">6</span>
+              <span class="section-title">Administración de negocios internacionales y comercio exterior</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.1</span>
+                  <span class="subsection-title">Diferencias conceptuales y enfoques</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Distinción entre negocios internacionales y comercio exterior: Negocios internacionales: concepto más amplio, abarca estrategia, marketing, recursos humanos y relaciones entre múltiples economías. Comercio exterior: enfoque operativo y especializado en importación/exportación de bienes y servicios entre países.</div>
+                  <div class="content-text">Interrelación práctica: Ambos van de la mano: comercio exterior opera dentro del marco y objetivos de negocios internacionales. Participan distintos actores: gobiernos, empresas y consumidores con regulaciones específicas por país.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=3601" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:00:01)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.2</span>
+                  <span class="subsection-title">Principios y marco legal aduanero peruano</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Marcos normativos relevantes: Decreto legislativo 1053 (Ley General de Aduanas), reglamentos, Ley de delitos aduaneros 28008, decretos legislativos y resoluciones complementarias.</div>
+                  <div class="content-text">Principios generales de la ley de aduanas: Facilitación del comercio exterior mediante tecnología y armonización de procedimientos. Cooperación e intercambio de información entre autoridades y operadores. Participación de agentes económicos: importadores, exportadores, agentes de aduana y transportistas. Gestión de calidad y uso de estándares internacionales (ISO) para homologación. Presunción de veracidad y buena fe entre operadores y administración aduanera, con facultad de verificación y sanciones por falsedad. Publicidad y transparencia de normas y procedimientos para reducir incertidumbre y favorecer rendición de cuentas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=3742" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:02:22)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="7">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">7</span>
+              <span class="section-title">Tendencias, tecnologías y logística sostenible</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.1</span>
+                  <span class="subsection-title">Inteligencia artificial y automatización en logística</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Aplicaciones actuales: Optimización de rutas, acomodo de contenedores, gestión de inventarios y rastreo mediante IA y geolocalización. Robótica en embalaje y centros de distribución; dispositivos de monitoreo para la salud y ubicación de conductores.</div>
+                  <div class="content-text">Impacto laboral y operativo: Aumento de eficiencia sin eliminar la necesidad de profesionales; cambio de tareas tediosas a supervisión tecnológica.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=4459" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:14:19)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.2</span>
+                  <span class="subsection-title">Sostenibilidad y trazabilidad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Logística sostenible: Empaques ecológicos, bodegas verdes, uso de energía solar y objetivos de fábricas con cero emisiones. Adopción creciente de vehículos eléctricos e híbridos; evolución hacia alternativas como hidrógeno.</div>
+                  <div class="content-text">Trazabilidad de productos: Rastreo desde parcela o huerto hasta consumidor para identificar fallas, contaminación o robos. Uso de dispositivos económicos de rastreo y sistemas integrados para la cadena de suministro.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=4640" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:17:20)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.3</span>
+                  <span class="subsection-title">Logística predictiva, última milla y marketplaces</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Logística predictiva: Software que anticipa cierres de rutas, congestiones y optimiza consumo de combustible y tiempos en tiempo real.</div>
+                  <div class="content-text">Última milla: Entregas finales con drones, vehículos autónomos pequeños, bicicletas y plataformas tipo Uber Eats; enfoque en satisfacción del cliente.</div>
+                  <div class="content-text">Plataformas digitales y marketplaces en logística: Mercado de servicios de transporte tipo marketplace que conecta oferentes de flete con demandantes. Consolidación de plataformas logísticas junto a marketplaces comerciales (Alibaba, Mercado Libre).</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=4812" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:20:12)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="8">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">8</span>
+              <span class="section-title">Incoterms, términos de comercio y unidades de medida de carga</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.1</span>
+                  <span class="subsection-title">Introducción a Incoterms y su función</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Definición y propósito: Incoterms: reglas facultativas de la Cámara de Comercio Internacional que delimitan obligaciones, reparto de gastos, transmisión de riesgos y lugar de entrega entre vendedor y comprador.</div>
+                  <div class="content-text">Uso práctico en negociaciones: Solo se debe usar un Incoterm por contrato para evitar conflictos en responsabilidades y costos. Versión vigente: Incoterms 2020 con 11 términos agrupados en categorías.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=5546" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:32:26)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.2</span>
+                  <span class="subsection-title">Grupos y términos básicos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Grupo E (entrega en origen): EXW (Ex Works/Exbor): obligación mínima del vendedor al poner mercancía a disposición en sus instalaciones; desde que comprador carga, asume riesgos y costos.</div>
+                  <div class="content-text">Grupo F (transporte principal contratado por comprador): FCA: vendedor cumple al poner mercancía a disposición del transportista nombrado por el comprador en lugar convenido. FAS: entrega al costado del buque en puerto de embarque; comprador asume costos y riesgos desde ese punto (solo marítimo/fluvial). FOB: entrega cuando la mercancía pasa la borda del buque; vendedor responsable hasta la carga a bordo (marítimo/fluvial).</div>
+                  <div class="content-text">Grupo C (vendedor paga transporte principal): CFR: vendedor paga flete hasta puerto de destino convenido, pero riesgo se transfiere cuando la mercancía cruza la borda en puerto de embarque.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=6203" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:43:23)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.3</span>
+                  <span class="subsection-title">Conceptos relacionados y unidades de carga</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Transporte principal y flete: Transporte principal: etapa internacional del traslado entre puertos/aeropuertos/terminales internacionales. Flete: costo de envío; distinguir flete internacional del transporte interno en origen/destino.</div>
+                  <div class="content-text">Unidades y contenedores: TEU: contenedor de 20 pies; 2 TEU = contenedor de 40 pies (FEU). FCL (Full Container Load): contenedor completo; LCL (Less than Container Load): carga consolidada y compartida.</div>
+                  <div class="content-text">Recomendaciones prácticas: Exportadores primerizos suelen preferir términos con menor responsabilidad (EXW, FOB según caso).</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=5949" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:39:09)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="9">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">9</span>
+              <span class="section-title">Conceptos operativos y ejemplos prácticos de Incoterms</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.1</span>
+                  <span class="subsection-title">Aplicaciones concretas y ejemplos por sector</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Ejemplos prácticos: Repuestos automotrices: vendedor en Tacna entrega FCA y comprador contrata transporte terrestre para recogida en almacén. Troncos de madera: vendedor de Pucallpa traslada al Callao y coloca al costado del buque bajo FAS. Pescados congelados: empresa en Paita carga contenedores a bordo bajo FOB y es responsable del despacho de exportación. Conservas en CFR: vendedor paga flete hasta puerto de destino, pero riesgo se transfiere en puerto de embarque.</div>
+                  <div class="content-text">Ejemplos adicionales integrados: Conservas de Chimbote a Manzanillo (CFR/CIF): empresa peruana paga flete y despacho de exportación; riesgo se transfiere al pasar la borda; empresa mexicana realiza descarga y despacho de importación en destino. Textiles Lima a Buenos Aires (CIP/CPT): vendedor peruano paga transporte y póliza de seguro (CIP), riesgo se transfiere al primer transportista; comprador argentino asume descarga y despacho de importación.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=6686" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:51:26)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.2</span>
+                  <span class="subsection-title">Documentación y términos a profundizar</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Términos a estudiar: Diferenciar claramente obligaciones de carga, estiba, seguro y despacho aduanero según Incoterm. Revisar FCL/LCL, TU/TEU, y documentación de embarque para determinación de responsabilidades.</div>
+                  <div class="content-text">Metodología de aprendizaje: Uso de infografías y casos prácticos para desglosar responsabilidades por cada Incoterm. Ejercicios grupales para aplicar términos a cotizaciones reales y comparar costos y riesgos.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=6135" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:42:15)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="10">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">10</span>
+              <span class="section-title">Incoterms avanzados y entrega</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">10.1</span>
+                  <span class="subsection-title">Términos C y ejemplos de obligación de seguro</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">CIF y sus implicaciones: CIF: costo, seguro y flete; vendedor paga flete y contrata póliza de seguro con cobertura mínima según cláusulas del Institute of London Underwriters. Riesgo se transfiere cuando la mercancía pasa la borda del buque en el puerto de embarque. Comprador asume costos de descarga y despacho de importación en puerto de destino.</div>
+                  <div class="content-text">CPT, CIP y diferencias: CPT: transporte pagado hasta el lugar de destino convenido; riesgo se transfiere al entregar la mercancía al primer transportista. CIP: similar al CPT, pero vendedor además contrata y paga la póliza de seguro que cubre el transporte hasta el destino convenido.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=7206" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:00:06)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">10.2</span>
+                  <span class="subsection-title">Grupos D y obligaciones máximas del vendedor</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">DAT, DAP y DDP: DAT: entrega en terminal de destino tras descarga; vendedor asume costes y riesgos hasta la descarga y pone mercancía a disposición en terminal convenida. DAP: entrega en lugar de destino convenido lista para descarga; vendedor asume costos y riesgos hasta el lugar, pero no la descarga. DDP: entrega con derechos pagados; vendedor asume la máxima obligación, organiza y paga transporte, despacho de exportación, despacho de importación y derechos en destino; comprador solo recibe la mercancía.</div>
+                  <div class="content-text">Uso práctico y ejemplos: DDP en e-commerce: compras en plataformas como Temu o Aliexpress suelen operar bajo responsabilidad real equivalente al DDP para el comprador final. Ejemplo DDP: empresa estadounidense envía equipos a Universidad en Arequipa; organiza transporte, despacho de exportación, paga impuestos en Perú y entrega equipo listo para descarga en la universidad.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=7874" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:11:14)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="11">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">11</span>
+              <span class="section-title">Cierre, reflexiones finales y próximos pasos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">11.1</span>
+                  <span class="subsection-title">Recapitulación de criterios y costos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Factores en selección de proveedores: Calidad, costo, tiempos de entrega y reputación del proveedor. Revisión de permisos y requisitos para productos especializados.</div>
+                  <div class="content-text">Costos a considerar en importaciones: Precio de la mercancía, flete internacional, seguro, transporte local, tributos aduaneros y agenciamiento de aduana.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=8221" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:17:01)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">11.2</span>
+                  <span class="subsection-title">Cierre de la sesión y logística académica</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Finalización y agradecimientos: Agradecimiento al docente y cierre por parte de los organizadores.</div>
+                  <div class="content-text">Tareas y asistencia: Recordatorio del ejercicio práctico para la próxima clase. Enlace para registro de asistencia compartido en el chat, tras registrarse pueden retirarse de la videollamada.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=8357" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:19:17)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="12">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">12</span>
+              <span class="section-title">Despacho de exportación vs despacho de importación</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">12.1</span>
+                  <span class="subsection-title">Definición y diferencias operativas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Despacho de exportación: Gestiones realizadas en el país de origen/puerto de origen para autorizar la salida de mercancías. Incluye documentación, declaraciones y cumplimiento de requisitos de control en origen.</div>
+                  <div class="content-text">Despacho de importación: Procesos para nacionalizar las mercancías en el país de destino/puerto de destino. Incluye pago de tributos, presentación de documentos, inspecciones y liberación para circulación interna.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=8313" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:18:33)</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">12.2</span>
+                  <span class="subsection-title">Implicaciones según Incoterm</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Responsabilidad de cada parte: Según el Incoterm, el vendedor o el comprador asumen la gestión y costos del despacho de importación y exportación. Es clave especificar en contrato quién coordina y paga agentes, almacenes y aranceles para evitar disputas.</div>
+                  <a href="https://www.youtube.com/watch?v=l3GNxUt3J48&start=8333" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:18:53)</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <a href="https://www.edumin.pe/" target="_blank">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="footer-logo" />
+      </a>
+      <p class="footer-text">
+        <span style="display: block; font-weight: bold">Contenido desarrollado por EDUMIN - Centro de Capacitación Especializado en Minería, Industria y Negocios</span>
+        <span style="display: block; font-style: italic">Material exclusivo para estudiantes de EDUMIN</span>
+        <a href="https://www.edumin.pe/" target="_blank" style="color: var(--color-principal); text-decoration: none; display: block">https://www.edumin.pe/</a>
+      </p>
+    </div>
+
+    <script>
+      const TITULO_DIPLOMADO = "ESPECIALISTA EN COMERCIO INTERNACIONAL: GESTIÓN ADUANERA Y LOGÍSTICA".toUpperCase();
+      const TITULO_CLASE = "CLASE 07: GESTIÓN ADUANERA: PROCEDIMIENTOS EN ESTADOS UNIDOS Y CHINA - 1RA PARTE".toUpperCase();
+
+      const elementoDiplomado = document.getElementById("tituloDiplomado");
+      if (elementoDiplomado) {
+        elementoDiplomado.innerText = TITULO_DIPLOMADO;
+      }
+
+      document.title = TITULO_CLASE;
+      const tituloPrincipal = document.getElementById("tituloPrincipal");
+      if (tituloPrincipal) {
+        tituloPrincipal.innerText = TITULO_CLASE;
+      }
+
+      const tituloCompacto = document.getElementById("tituloCompacto");
+      if (tituloCompacto) {
+        tituloCompacto.innerText = TITULO_CLASE;
+      }
+
+      function toggleSection(element) {
+        const section = element.closest(".section");
+        const wasActive = section.classList.contains("active");
+
+        section.classList.toggle("active");
+
+        if (wasActive) {
+          const subsections = section.querySelectorAll(".subsection");
+          subsections.forEach((subsection) => {
+            subsection.classList.remove("active");
+          });
+        }
+      }
+
+      function toggleSubsection(element) {
+        const subsection = element.closest(".subsection");
+        subsection.classList.toggle("active");
+      }
+
+      function expandAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.add("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.add("active");
+        });
+      }
+
+      function collapseAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.remove("active");
+        });
+      }
+
+      function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, delay);
+        };
+      }
+
+      function clearSearch() {
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchContent();
+        searchInput.focus();
+      }
+
+      const createDiacriticInsensitiveRegex = (term) => {
+        const charMap = {
+          a: "[aáAÁ]",
+          e: "[eéEÉ]",
+          i: "[iíIÍ]",
+          o: "[oóOÓ]",
+          u: "[uúUÚ]",
+        };
+
+        const regexString = term
+          .split("")
+          .map((char) => {
+            const lowerChar = char.toLowerCase();
+            return charMap[lowerChar] || char;
+          })
+          .join("");
+
+        return new RegExp(`(${regexString})`, "gi");
+      };
+
+      function searchContent() {
+        const inputElement = document.getElementById("searchInput");
+        const searchTerm = inputElement.value.trim();
+
+        const searchableElements = document.querySelectorAll(".content-text, .section-title, .subsection-title");
+        let found = false;
+        let firstMatchElement = null;
+
+        document.querySelectorAll(".section.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".subsection.active").forEach((el) => el.classList.remove("active"));
+        searchableElements.forEach((element) => {
+          element.innerHTML = element.getAttribute("data-original-text") || element.textContent;
+        });
+
+        if (searchTerm.length < 3) {
+          return;
+        }
+
+        const searchRegex = createDiacriticInsensitiveRegex(searchTerm);
+
+        searchableElements.forEach((element) => {
+          const originalText = element.getAttribute("data-original-text") || element.textContent;
+
+          if (searchRegex.test(originalText)) {
+            found = true;
+
+            element.innerHTML = originalText.replace(searchRegex, `<span class="highlight">$1</span>`);
+
+            const subsection = element.closest(".subsection");
+            if (subsection) {
+              subsection.classList.add("active");
+              subsection.closest(".section")?.classList.add("active");
+            } else if (element.classList.contains("section-title")) {
+              element.closest(".section")?.classList.add("active");
+            }
+
+            if (!firstMatchElement) {
+              firstMatchElement = element;
+            }
+          }
+        });
+
+        if (firstMatchElement) {
+          requestAnimationFrame(() => {
+            firstMatchElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        } else if (searchTerm.length >= 3) {
+          alert("No se encontraron resultados para: " + searchTerm);
+        }
+      }
+
+      const debouncedSearch = debounce(searchContent, 300);
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        clearBtn.style.display = this.value.length > 0 ? "block" : "none";
+        debouncedSearch();
+      });
+
+      document.getElementById("searchInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          clearTimeout(this._timeoutId);
+          searchContent();
+        }
+      });
+
+      // --- Lógica del Header Compacto ---
+      const header = document.querySelector(".header");
+      const headerSpacer = document.querySelector(".header-spacer");
+      let initialHeaderHeight = 0; // Altura del header original
+      let compactHeaderHeight = 0; // Altura del header en modo compacto
+      let scrollTriggerPoint = 0; // Punto de scroll para activar el cambio
+
+      function handleHeaderState() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollY > scrollTriggerPoint) {
+          if (!header.classList.contains("compact")) {
+            header.classList.add("compact");
+            headerSpacer.style.height = `${initialHeaderHeight}px`;
+          }
+        } else {
+          if (header.classList.contains("compact")) {
+            header.classList.remove("compact");
+            headerSpacer.style.height = "0px";
+          }
+        }
+      }
+
+      function initializeHeader() {
+        initialHeaderHeight = header.offsetHeight;
+        const headerClone = header.cloneNode(true);
+        headerClone.classList.add("compact");
+        headerClone.style.visibility = "hidden";
+        headerClone.style.position = "absolute";
+        document.body.appendChild(headerClone);
+        compactHeaderHeight = headerClone.offsetHeight;
+        document.body.removeChild(headerClone);
+
+        scrollTriggerPoint = initialHeaderHeight - compactHeaderHeight;
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeHeader);
+      window.addEventListener("scroll", handleHeaderState);
+      window.addEventListener("resize", debounce(initializeHeader, 200));
+    </script>
+  </body>
+</html>

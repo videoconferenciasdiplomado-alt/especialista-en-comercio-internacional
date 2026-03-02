@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <style>
+      /* Estilos de balanceo de texto */
+      .header-content-box,
+      .header-compact-title,
+      .footer,
+      .section-title,
+      .subsection-title {
+        text-wrap: balance;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      :root {
+        /* Colores Principales del Diseño (Acentos y Degradados) */
+        /* ======================================================= */
+        --color-principal: #00beff; /* Cian Brillante para acentos, bordes y el inicio del degradado principal */
+        --color-secundario: #1e50cd; /* Azul Medio, parte final del degradado de acento */
+
+        /* Fondos Oscuros de la Interfaz */
+        /* ======================================================= */
+        --fondo-oscuro-claro: #002a52; /* Fondo de secciones y contenido */
+        --fondo-oscuro-fuerte: #001a33; /* Fondo del encabezado (header) y pie de página (footer) */
+        /* ======================================================= */
+        --fondo-oscuro-medio: #003366; /* Fondo de encabezados y cajas de contenido */
+        --fondo-borde-claro: #004080; /* Bordes ligeros y color de fondo al hacer hover en encabezados */
+        --fondo-sombra-azul-header: #0050a0; /* ¡NUEVO! Sombra en el header */
+
+        /* Colores de Texto y Fondo General del Body */
+        /* ======================================================= */
+        --texto-blanco-1: #ffffff; /* Blanco puro para títulos y texto en fondo muy oscuro */
+        --texto-claro-2: #e6e6e6; /* Texto principal y claro */
+        --texto-medio-3: #cccccc; /* Texto de contenido de item (un poco más tenue) */
+
+        /* ======================================================= */
+        --fondo-body-inicio: #99e5ff; /* Color de inicio del degradado de fondo del body */
+        --fondo-body-fin: #a5b9eb; /* Color de final del degradado de fondo del body */
+
+        /* Colores de Acento Específicos (YouTube, Búsqueda) */
+        /* ======================================================= */
+        --rojo-youtube-claro: #e60000;
+        --rojo-youtube-fuerte: #a30000;
+        --timestamp-youtube: #ffcccc;
+        --fondo-resaltado: #00c339; /* Verde para el fondo del texto buscado */
+
+        /* Bases RGB para Transparencias (RGBA) */
+        /* ======================================================= */
+        --sombra-rgb: 0, 0, 0; /* Negro puro: Usado para sombras generales y profundidad */
+        --acento-rgb: 0, 190, 255; /* Cian Brillante: Usado para brillos y sombras de acento */
+        --rojo-rgb: 230, 0, 0; /* Rojo Puro: Usado para sombras de enlaces de YouTube */
+        /* ======================================================= */
+        --gradient-principal: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--fondo-body-inicio) 0%, var(--fondo-body-fin) 100%);
+        line-height: 1.2;
+        scroll-behavior: smooth;
+      }
+
+      strong#tituloDiplomado {
+        font-weight: 900;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @keyframes slideDownSutil {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header.animacion-inicial {
+        animation: slideDownSutil 0.4s ease-out 1;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        box-shadow: 0 5px 15px rgba(var(--sombra-rgb), 0.5);
+        text-align: center;
+        will-change: transform;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header-text-box {
+        display: grid;
+        gap: 10px;
+        word-break: break-word;
+        margin: 0 15px;
+      }
+
+      .header.compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+      }
+
+      .header-spacer {
+        display: none;
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header.compact + .header-spacer {
+        display: block;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .header.compact .header-top {
+        display: none;
+      }
+
+      .logo {
+        width: 140px;
+        height: auto;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+      }
+
+      .header.compact .logo {
+        width: 90px;
+        margin: 0 10px;
+      }
+
+      .header .logo.compact-logo {
+        display: none;
+      }
+
+      .header.compact .logo.compact-logo {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 900;
+      }
+
+      .header.compact h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+      }
+
+      .header-content-box {
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 20px 20px;
+        box-shadow: 0 8px 20px rgba(var(--acento-rgb), 0.6);
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        opacity: 1;
+        transform: translateY(0);
+        will-change: transform;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .header-content-box {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: 0;
+        transform: translateY(-10px);
+      }
+
+      .header-content-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(var(--acento-rgb), 0.8);
+      }
+
+      .header-bottom-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header-second-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header.compact .header-bottom-row {
+        flex-grow: 1;
+      }
+
+      .logo-and-title {
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .logo-and-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .header.compact .header-bottom-row .logo-and-title {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        gap: 10px;
+      }
+
+      .header.compact .header-bottom-row .logo-and-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .header-compact-title {
+        display: none;
+        color: var(--texto-blanco-1);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 10px;
+        white-space: normal;
+      }
+
+      .header.compact .header-compact-title {
+        display: block;
+      }
+
+      .search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--fondo-oscuro-medio);
+        border: 2px solid var(--fondo-borde-claro);
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(var(--sombra-rgb), 0.25);
+        will-change: border-color, background-color;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+
+      .search-bar:focus-within {
+        border-color: var(--fondo-sombra-azul-header);
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .clear-search {
+        cursor: pointer;
+        color: var(--texto-claro-2);
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        display: none;
+        transition: color 0.2s ease;
+        transform: scale(1.5);
+      }
+
+      .clear-search:hover {
+        color: var(--texto-blanco-1);
+      }
+
+      .search-bar input {
+        flex-grow: 1;
+        padding: 10px 18px;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--texto-claro-2);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        min-width: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header.compact .search-bar input {
+        padding: 10px 20px;
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-button {
+        background: var(--gradient-principal);
+        border: none;
+        color: var(--texto-blanco-1);
+        padding: 8px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        will-change: transform;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        max-width: 150px;
+        white-space: normal;
+      }
+
+      .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .search-bar .action-button {
+        margin: 5px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes fadeInUpContent {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .mind-map {
+        transition: margin-top 0.4s ease;
+        margin: 50px 0;
+      }
+
+      .mind-map.animacion-contenido {
+        animation: fadeInUpContent 0.4s ease-out 1 forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background-color: var(--fondo-oscuro-claro);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-oscuro-medio);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(var(--sombra-rgb), 0.25);
+        transition: border-color 0.3s ease;
+      }
+
+      .section-header {
+        padding: 20px;
+        background-color: var(--fondo-oscuro-medio);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .section-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 15px;
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        color: var(--texto-claro-2);
+        will-change: transform;
+        transition: transform 0.3s ease;
+      }
+
+      .section.active > .section-header .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .section.active .section-content {
+        max-height: fit-content;
+        padding-bottom: 10px;
+        opacity: 1;
+      }
+
+      .subsection {
+        margin: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-borde-claro);
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .subsection:hover {
+        border-color: var(--fondo-sombra-azul-header);
+      }
+
+      .subsection:hover .subsection-header {
+        background-color: var(--fondo-sombra-azul-header);
+      }
+
+      .section:hover {
+        border-color: var(--fondo-borde-claro);
+      }
+
+      .section:hover .section-header {
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .subsection-header {
+        padding: 15px;
+        background-color: var(--fondo-borde-claro);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .subsection-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .subsection-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .subsection-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--fondo-oscuro-claro);
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .subsection.active .subsection-content {
+        max-height: fit-content;
+        padding: 15px;
+        opacity: 1;
+      }
+
+      .subsection.active .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .content-item {
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border-left: 4px solid var(--color-principal);
+        box-shadow: 0 1px 5px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .content-text {
+        color: var(--texto-medio-3);
+        margin-bottom: 5px;
+        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 500;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .content-text::before {
+        content: "•";
+        color: var(--color-principal);
+        font-weight: 700;
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+      }
+
+      .youtube-link {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, var(--rojo-youtube-claro) 0%, var(--rojo-youtube-fuerte) 100%);
+        color: var(--texto-blanco-1);
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(var(--rojo-rgb), 0.4);
+        will-change: transform;
+      }
+
+      .youtube-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 7.5px rgba(var(--rojo-rgb), 0.5);
+        will-change: transform;
+      }
+
+      .timestamp {
+        color: var(--timestamp-youtube);
+        font-size: 0.85rem;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+
+      .highlight {
+        background-color: var(--fondo-resaltado);
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+        padding: 4px;
+        border-radius: 6px;
+      }
+
+      .footer {
+        padding: 30px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        border-top: 1px solid var(--fondo-oscuro-medio);
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .footer-text {
+        color: var(--texto-claro-2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+        }
+
+        .logo {
+          margin: 0;
+        }
+
+        .header-text-box {
+          margin: 0;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
+        }
+
+        .header.compact .header-bottom-row .logo-and-title {
+          gap: 5px;
+        }
+        .logo,
+        .footer-logo {
+          width: 105px;
+        }
+
+        .header.compact .header-bottom-row {
+          flex-direction: column;
+        }
+
+        .header.compact .header-compact-title {
+          margin: 0 5px;
+          font-size: 0.8rem;
+        }
+
+        .header.compact .logo.compact-logo {
+          width: 65px;
+          margin: 5px;
+        }
+
+        .action-button,
+        .search-bar input,
+        .clear-search {
+          font-size: 0.9rem;
+        }
+
+        .section-header {
+          padding: 15px;
+        }
+
+        .header.compact .controls {
+          flex-direction: row;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .subsection-title {
+          font-size: 1rem;
+        }
+        .section-number,
+        .subsection-number {
+          font-size: 13px;
+        }
+
+        .content-text {
+          font-size: 0.9rem;
+        }
+
+        .youtube-link {
+          font-size: 0.8rem;
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+        }
+
+        .header.compact .action-button {
+          padding: 6px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header animacion-inicial">
+      <div class="header-content-box">
+        <div class="header-top">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo" />
+          </a>
+          <div class="header-text-box">
+            <h1>
+              <div>DIPLOMADO DE ALTA ESPECIALIZACIÓN EN</div>
+              <strong id="tituloDiplomado" style="display: block"></strong>
+            </h1>
+            <p id="tituloPrincipal"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-bottom-row">
+        <div class="logo-and-title">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo compact-logo" />
+          </a>
+          <span class="header-compact-title" id="tituloCompacto"></span>
+        </div>
+        <div class="header-second-row">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar en el resumen interactivo…" autocomplete="off" />
+            <div class="search-actions">
+              <span class="clear-search" onclick="clearSearch()">&times;</span>
+              <button class="action-button" onclick="searchContent()">Buscar</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="action-button" onclick="expandAll()">Mostrar todo</button>
+            <button class="action-button" onclick="collapseAll()">Colapsar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="container">
+      <div class="mind-map animacion-contenido" id="mindMap">
+        <div class="section" data-section="1">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">1</span>
+              <span class="section-title">Introducción y reanudación de la sesión</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.1</span>
+                  <span class="subsection-title">Saludo, objetivo y repaso inicial</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Bienvenida a los participantes y explicación de la reanudación por fallas técnicas: Objetivo de la sesión: valoración aduanera y operatividad portuaria. Repaso rápido de lo visto anteriormente y reinicio tras pausa breve.</div>
+                  <div class="content-text">Invitación a seguir la presentación y uso de plataformas prácticas: Solicita que los asistentes tengan abiertas las plataformas mencionadas. Menciona participantes presentes como referencia.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=567" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:09:27)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.2</span>
+                  <span class="subsection-title">Cierre y agradecimientos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Agradecimiento a los participantes por su asistencia y participación</div>
+                  <div class="content-text">Compartir asistencia en chat y instrucciones para retirarse tras completar registro</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=8166" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:16:06)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="2">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">2</span>
+              <span class="section-title">Uso de plataformas para análisis de comercio</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.1</span>
+                  <span class="subsection-title">Exportemos.pe: navegación y datos de exportación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Ruta en la plataforma: Inicio → Descubre oportunidades → Estadísticas de exportaciones → Exportaciones por partida arancelaria: Acceso al dashboard en Power BI y visualización del entorno general. Observación de principales productos exportados (minerales de cobre, cobre, oro, uvas, cátodos, harina de pescado, molibdeno).</div>
+                  <div class="content-text">Filtrado por partida y ejemplo práctico (maracuyá HS 0811909400): Selección del check para maracuyá y cambio a vista de exportaciones tabla para datos detallados. Conversión de valores a miles de dólares para lectura más digerible.</div>
+                  <div class="content-text">Análisis por mercados y empresas exportadoras: Identificación de principales destinos (Chile, EE. UU.) y razones operativas (reexportación, cercanía). Visualización de empresas exportadoras y sus comportamientos por mercado (ejemplos: Elite Food Perú, Mebol). Observación de variaciones interanuales y performance por empresa.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=663" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:11:03)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.2</span>
+                  <span class="subsection-title">Funcionalidades adicionales de Exportemos.pe</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Información geográfica y logística disponible: Puertos de origen (Callao, Paita, Tacna, Lima), vías de transporte (marítimo, terrestre, aéreo). Ubigeo y departamento de procedencia de exportaciones.</div>
+                  <div class="content-text">Precios y unidades de medida: Gráficos de tendencia de precios FOB y precio relativo promedio por envío. Unidades: cajas, unidades, bolsas; fórmula para cálculo de precio relativo disponible en la plataforma.</div>
+                  <div class="content-text">Limitaciones y formas de explotación: Algunas vistas no descargables; sugiere recortes de pantalla para informes. Recomendación de usar IA para convertir recortes en Excel cuando descarga no esté disponible.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=1409" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:23:29)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="3">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">3</span>
+              <span class="section-title">Otras herramientas: Magic Cepal y ADUANET</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.1</span>
+                  <span class="subsection-title">Integración con herramientas de IA</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Demostración con Gemini para procesar capturas y generar Excel: Flujo: recorte de pantalla → subir al Gemini → transcripción y generación de hoja de cálculo → guardar en Drive. Observaciones sobre precisión: a veces faltan líneas o detalles que se deben validar manualmente.</div>
+                  <div class="content-text">Recomendaciones de uso responsable de IA: Utilizar IA como coach y asistente, no sustituir la validación humana. Validar resultados y ajustar según la esencia del análisis requerido.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=1817" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:30:17)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.2</span>
+                  <span class="subsection-title">Magic Cepal: creación de cuenta y análisis de competitividad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Recomendación de crear cuenta en Magic Cepal y acceso guiado: Proceso de registro puede demorar; profesor comparte enlaces y acceso temporal para agilizar. Interfaz principal: matriz de competitividad y análisis por país y producto.</div>
+                  <div class="content-text">Ejemplo práctico: configurar análisis por país y producto: Ruta: Magic → Análisis de competitividad por país → País informante (EE. UU.) → Socio (Perú). Parámetros sugeridos: flujo = importaciones, nivel de agregación = 6, capítulo = 18 (cacao y preparaciones), periodo 2023-2024, promedio 3 años. Posibles resultados: clasificación en matriz (estrella naciente, alta atracción/alta competitividad) y tendencias de mercado.</div>
+                  <div class="content-text">Limitaciones técnicas y recomendaciones: Plataforma puede demorar o mostrar errores; sugiere probar con varios productos y momentos. Importancia de interpretar matriz para decisiones de comercialización.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=2465" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:41:05)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.3</span>
+                  <span class="subsection-title">ADUANET / SUNAT: consulta de despachos y RUC</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Acceso a aduanet.go.pe para consultas aduaneras: Compartir enlace y realizar consultas prácticas en clase. Ejemplo práctico con RUC de empresa exportadora de fibra de alpaca.</div>
+                  <div class="content-text">Parámetros de búsqueda y filtros temporales: Puertos (Callao), asiento 18, periodo 2020–2025 para análisis de operaciones y movimientos. Uso de la plataforma para obtener información operativa y de despacho.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=3333" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:55:33)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="4">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">4</span>
+              <span class="section-title">Fundamentos, normativa y roles en la valoración</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.1</span>
+                  <span class="subsection-title">Conceptos básicos y normativa aplicable</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">La valoración aduanera sigue el Acuerdo sobre Valoración en Aduanas de la OMC y normas aplicables: Actividad del control de mercancías realizada por funcionarios aduaneros de la SUNAT. El funcionario puede establecer o verificar el valor en aduana y cotejarlo con valores declarados por el importador.</div>
+                  <div class="content-text">Atribuciones y procedimiento de verificación: SUNAT realiza verificaciones y, ante discrepancias, determina procesos administrativos para resolver diferencias. Importancia de la documentación que respalde el valor declarado (facturas, contratos, condiciones de venta).</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=3508" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:58:28)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.2</span>
+                  <span class="subsection-title">Obligaciones y buenas prácticas para importadores y asesores</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Conocimiento y preparación para evitar arbitrariedades: Empresario importador y su asesor deben conocer criterios de valoración aduanera para prevenir ajustes o sanciones. Tener soporte documental claro y coherente con la operación comercial.</div>
+                  <div class="content-text">Roles y responsabilidades en la relación con SUNAT: Importador responsable de la veracidad de la declaración; el asesor debe apoyar en documentación y cálculos. En caso de observaciones, seguir procedimientos administrativos y presentar la evidencia requerida.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=3581" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:59:41)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="5">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">5</span>
+              <span class="section-title">Metodología y determinación del valor en aduana</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.1</span>
+                  <span class="subsection-title">Diferencia entre precio comercial y valor en aduana</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Precio comercial vs valor de aduana: Precio es el valor comercial expresado en factura; ejemplo Incoterm Ex-Works donde el vendedor entrega en sus instalaciones. Valor de aduana es la base imponible sujeta a derechos ad valorem y considera transporte internacional y seguro hasta puerto de destino.</div>
+                  <div class="content-text">Implicaciones prácticas: Declarar Ex-Works sin ajustar por transporte y seguro ocasiona discrepancias en la valoración. Necesidad de documentar descuentos, pagos indirectos y condiciones de venta para sustentar el valor declarado.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=4094" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:08:14)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.2</span>
+                  <span class="subsection-title">Métodos de valoración aduanera</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Orden y aplicación escalonada de métodos: Primero: valor de transacción (precio realmente pagado o por pagar). Segundo: valor de transacción de mercancías idénticas (comparación con importaciones idénticas). Tercero: valor de transacción de mercancías similares (características y función semejantes). Cuarto: método deductivo (precio de venta en país de importación, deducciones por costos posimportación). Quinto: valor reconstruido (suma de costo de producción más beneficios y gastos generales). Sexto: método de última instancia (criterios razonables compatibles con principios del Acuerdo).</div>
+                  <div class="content-text">Procedimiento y duda razonable: Funcionarios aplican métodos de manera secuencial; no se elige arbitrariamente uno distinto. Duda razonable genera notificación y plazos para presentación de sustentos, con 5 días más posible prórroga. Posibles respuestas del importador: presentar sustento, sustento insuficiente u optar por autoliquidar y luego solicitar devolución si corresponde.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=4359" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:12:39)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="6">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">6</span>
+              <span class="section-title">Costos, tributación y aplicación práctica</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.1</span>
+                  <span class="subsection-title">Costos y tributos relacionados</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Elementos que inciden en la valoración: Gasto de transporte, seguros, valores referenciales y descripciones mínimas de partidas. Historiales y referencias de SUNAT para comparar promedios y seguros.</div>
+                  <div class="content-text">Tratamiento de impuestos en el costo: Ad valorem se considera en la base imponible; otros impuestos (IGV, IPM, percepciones) pueden manejarse vía crédito fiscal y no necesariamente integrarse al costo final. Percepción: porcentajes según caso (10% primera importación, 3.5% importación recurrente, 5% usados) y posibilidad de solicitar devolución si no se consolida la operación.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=5177" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:26:17)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.2</span>
+                  <span class="subsection-title">Ejercicio práctico y validación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Trabajo en Drive y ejemplo numérico: Profesor comparte hoja con fórmulas y datos; objetivo aproximarse al valor SIF mostrado (ej. 105,480 USD). Los alumnos deben calcular impuestos totales y verificar partida arancelaria para determinar porcentaje ad valorem aplicable.</div>
+                  <div class="content-text">Observaciones del ejercicio: Discrepancias con el SIF exigen sustentos sobre negociaciones, descuentos o pagos indirectos. Plazos para sustentar y posibilidad de ajuste o autoliquidación según resultado de verificación.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=5101" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:25:01)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.3</span>
+                  <span class="subsection-title">Resolución en clase y cálculos finales</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Ejemplo práctico con costo FOP total 101.000 y SIF como base imponible</div>
+                  <div class="content-text">Aplicación de ad valorem 11% sobre SIF; IGV 16% sobre SIF más ad valorem; percepciones y otros cargos (2%, 3.5%) incorporados por fórmulas</div>
+                  <div class="content-text">Resultado aproximado de impuestos en dólares: 37.513 USD, demostrando impacto significativo de la carga impositiva</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7970" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:12:50)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="7">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">7</span>
+              <span class="section-title">Operatividad portuaria y sistema portuario nacional</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.1</span>
+                  <span class="subsection-title">Actores y responsabilidades en la operativa portuaria</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Personas y entidades participantes: Operador portuario: empresas que prestan servicios portuarios. Usuario del puerto: importadores, exportadores y empresas que solicitan servicios. Administrador portuario: concesionado, privado o estatal según caso.</div>
+                  <div class="content-text">Modalidades de operación y servicios: Embarque y descarga directas; zonas de almacenamiento asignadas a prestadores de servicios; depósitos temporales extraportuarios. Servicios de practicaje, atraque, manipulación, carga y descarga; agentes de carga y empresas encargadas de llenado/vaciado de contenedores a riesgo del usuario.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=5658" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:34:18)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.2</span>
+                  <span class="subsection-title">Concesiones, ejemplos y casos prácticos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Naturaleza de las concesiones portuarias: Concesión: derecho que otorga el Estado para explotar y administrar un servicio público durante tiempo determinado bajo condiciones contractuales. Compromisos del concesionario: inversión en infraestructura y cumplimiento de plazos (ej. plazos de 30 años).</div>
+                  <div class="content-text">Casos actuales y modalidades de titularidad: Chancay: infraestructura privada construida por Costco Shipping Ports con uso público; proyecto clave para convertir la costa oeste en hub Asia-Pacífico. Distinción entre propiedad del suelo (Estado) y derechos de explotación otorgados a concesionarios o titulares privados.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=5931" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:38:51)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="8">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">8</span>
+              <span class="section-title">Infraestructura, normativa y modernización</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.1</span>
+                  <span class="subsection-title">Infraestructura y zonas portuarias</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Componentes de infraestructura portuaria: Accesos acuáticos (canales, zonas de aproximación), obras de abrigo (rompeolas), señalización náutica. Zonas de transferencia: muelles, diques, dársenas, áreas de almacenamiento, boyas de amarre y tuberías. Acceso terrestre: vías interiores, conexiones viales y líneas férreas al Sistema Nacional de Circulación Vial.</div>
+                  <div class="content-text">Distinciones territoriales: Territorio aduanero: espacios donde la autoridad aduanera ejerce potestad (puertos, aeropuertos, zonas francas). Zona primaria portuaria y zonas extraportuarias: depósitos y servicios fuera del área inmediata del puerto.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=5707" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:35:07)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.2</span>
+                  <span class="subsection-title">Sistema portuario nacional y autoridad portuaria</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Objetivos y órganos del sistema portuario: Regular actividades y servicios en terminales e instalaciones marítimas, fluviales y lacustres. Lineamientos: política portuaria, Autoridad Portuaria Nacional (APN), Plan Nacional de Desarrollo Portuario y autoridades regionales.</div>
+                  <div class="content-text">Funciones de la APN: Organismo técnico especializado adscrito al Ministerio de Transportes y Comunicaciones con autonomía administrativa, técnica y financiera. Diseña el plan nacional, fomenta competitividad, planificación, modernización y sostenibilidad del sistema portuario.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=6300" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:45:00)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.3</span>
+                  <span class="subsection-title">Inversiones, proyectos y modernización</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Inversión histórica superior a 2.600 millones de dólares y proyección de 1.900 millones en obras en ejecución</div>
+                  <div class="content-text">Proyectos destacados: Terminal Portuario Multipropósito de Chancay con inversión superior a 1.200 millones en primera etapa, incluyendo antepuerto, zona operativa con cuatro amarraderos y túnel de acceso</div>
+                  <div class="content-text">Implementación de sistemas digitales: Ventanilla Única de Comercio Exterior, Sistema de Comunidad Portuaria, centros de control de operaciones en Callao e Iquitos y uso de drones para inspecciones</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7597" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:06:37)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="9">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">9</span>
+              <span class="section-title">Distribución regional, logística y sostenibilidad</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.1</span>
+                  <span class="subsection-title">Distribución, rankings y datos del puerto del Callao</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Distribución y tipos de terminales en Perú: Cerca de 87 instalaciones; mezcla de uso público, multipropósito y granelero, incluyendo terminales concesionados con conexión pública y privada.</div>
+                  <div class="content-text">Principales terminales y estadísticas: Ranking: APM, Shougang-Hierro y DP World son los más movidos. Callao tiene tres terminales (minerales, norte multipropósito y sur contenedores) con rompeolas e infraestructura de grúas y patios.</div>
+                  <div class="content-text">Concesiones y compromisos de inversión en Callao: DP World (desde 2006, plazo 30 años) y APM Terminals Callao SA mantienen concesiones vinculadas a compromisos de inversión específicos en infraestructura.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=6833" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:53:53)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.2</span>
+                  <span class="subsection-title">Puertos regionales y especialización</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Principales puertos fuera del Callao: Paita (Piura): segundo en movimiento de contenedores, impacto en agroexportaciones y Salaverry: terminal multipropósito con impacto económico regional. San Nicolás (Shougang-Hierro) y Matarani: liderazgo en movimiento de minerales en sur del país. Yurimaguas, Iquitos y Pucallpa: terminales fluviales que conectan la Amazonía con la costa, dinamizando turismo y comercio regional.</div>
+                  <div class="content-text">Terminales privados y especializados: Monte Azul, Mina Justa, ENGE: terminales privados para hidrocarburos y minerales que aportan modernización y automatización.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7373" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:02:53)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.3</span>
+                  <span class="subsection-title">Seguridad, responsabilidad social y sostenibilidad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Protección y seguridad portuaria: Aplicación del Código PBIP y adquisición de equipamiento para centros de control y monitoreo. Uso de tecnologías para control operativo y prevención de riesgos.</div>
+                  <div class="content-text">Responsabilidad social y metas sostenibles: Integración puerto-ciudad, limpieza de playas, charlas de igualdad de género y promoción de ODS. Proyecto "Rumbo hacia un Sistema Portuario Sostenible" y liderazgo de la APN en comités internacionales.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7661" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:07:41)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="10">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">10</span>
+              <span class="section-title">Conclusiones y cierre práctico</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">10.1</span>
+                  <span class="subsection-title">Síntesis de aprendizajes clave</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Valoración aduanera: Conocer y documentar claramente el valor declarado evita demoras, ajustes y sanciones; aplicar métodos de valoración en orden y sustentar ante duda razonable.</div>
+                  <div class="content-text">Operatividad portuaria: Comprender actores, modalidades, infraestructura y régimen de concesiones permite planificar logística y anticipar riesgos operativos.</div>
+                  <div class="content-text">Herramientas y apoyo tecnológico: Uso de plataformas (Exportemos.pe, Magic Cepal, ADUANET) junto con IA incrementa eficiencia, pero requiere validación humana.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7185" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:59:45)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">10.2</span>
+                  <span class="subsection-title">Recomendaciones y siguientes pasos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Buenas prácticas: Mantener documentación completa, coordinar con contadores y asesores ante pagos indirectos o acuerdos especiales, y prever tiempos para sustentar la valoración.</div>
+                  <div class="content-text">Trabajo práctico: Resolver ejercicios compartidos en Drive, verificar cálculos de impuestos y comparar con valores referenciales SIF para practicar sustentación ante SUNAT.</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7200" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:00:00)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">10.3</span>
+                  <span class="subsection-title">Evaluación y continuidad académica</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Evaluación final opcional: entrega de trabajo final o examen de respuesta múltiple en plataforma virtual</div>
+                  <div class="content-text">Profesor disponible para consultas y resolución de dudas; seguimiento en próximas sesiones regulares (martes y jueves)</div>
+                  <a href="https://www.youtube.com/watch?v=pHW4jawwUQc&start=7853" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:10:53)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="https://www.edumin.pe/" target="_blank">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="footer-logo" />
+      </a>
+      <p class="footer-text">
+        <span style="display: block; font-weight: bold">Contenido desarrollado por EDUMIN - Centro de Capacitación Especializado en Minería, Industria y Negocios</span>
+        <span style="display: block; font-style: italic">Material exclusivo para estudiantes de EDUMIN</span>
+        <a href="https://www.edumin.pe/" target="_blank" style="color: var(--color-principal); text-decoration: none; display: block">https://www.edumin.pe/</a>
+      </p>
+    </div>
+
+    <script>
+      const TITULO_DIPLOMADO = "ESPECIALISTA EN COMERCIO INTERNACIONAL: GESTIÓN ADUANERA Y LOGÍSTICA".toUpperCase();
+      const TITULO_CLASE = "CLASE 14: APLICACIÓN DE PLATAFORMAS Y HERRAMIENTAS UTILIZADAS EN EL COMERCIO EXTERIOR - 2DA PARTE".toUpperCase();
+
+      const elementoDiplomado = document.getElementById("tituloDiplomado");
+      if (elementoDiplomado) {
+        elementoDiplomado.innerText = TITULO_DIPLOMADO;
+      }
+
+      document.title = TITULO_CLASE;
+      const tituloPrincipal = document.getElementById("tituloPrincipal");
+      if (tituloPrincipal) {
+        tituloPrincipal.innerText = TITULO_CLASE;
+      }
+
+      const tituloCompacto = document.getElementById("tituloCompacto");
+      if (tituloCompacto) {
+        tituloCompacto.innerText = TITULO_CLASE;
+      }
+
+      function toggleSection(element) {
+        const section = element.closest(".section");
+        const wasActive = section.classList.contains("active");
+
+        section.classList.toggle("active");
+
+        if (wasActive) {
+          const subsections = section.querySelectorAll(".subsection");
+          subsections.forEach((subsection) => {
+            subsection.classList.remove("active");
+          });
+        }
+      }
+
+      function toggleSubsection(element) {
+        const subsection = element.closest(".subsection");
+        subsection.classList.toggle("active");
+      }
+
+      function expandAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.add("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.add("active");
+        });
+      }
+
+      function collapseAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.remove("active");
+        });
+      }
+
+      function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, delay);
+        };
+      }
+
+      function clearSearch() {
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchContent();
+        searchInput.focus();
+      }
+
+      const createDiacriticInsensitiveRegex = (term) => {
+        const charMap = {
+          a: "[aáAÁ]",
+          e: "[eéEÉ]",
+          i: "[iíIÍ]",
+          o: "[oóOÓ]",
+          u: "[uúUÚ]",
+        };
+
+        const regexString = term
+          .split("")
+          .map((char) => {
+            const lowerChar = char.toLowerCase();
+            return charMap[lowerChar] || char;
+          })
+          .join("");
+
+        return new RegExp(`(${regexString})`, "gi");
+      };
+
+      function searchContent() {
+        const inputElement = document.getElementById("searchInput");
+        const searchTerm = inputElement.value.trim();
+
+        const searchableElements = document.querySelectorAll(".content-text, .section-title, .subsection-title");
+        let found = false;
+        let firstMatchElement = null;
+
+        document.querySelectorAll(".section.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".subsection.active").forEach((el) => el.classList.remove("active"));
+        searchableElements.forEach((element) => {
+          element.innerHTML = element.getAttribute("data-original-text") || element.textContent;
+        });
+
+        if (searchTerm.length < 3) {
+          return;
+        }
+
+        const searchRegex = createDiacriticInsensitiveRegex(searchTerm);
+
+        searchableElements.forEach((element) => {
+          const originalText = element.getAttribute("data-original-text") || element.textContent;
+
+          if (searchRegex.test(originalText)) {
+            found = true;
+
+            element.innerHTML = originalText.replace(searchRegex, `<span class="highlight">$1</span>`);
+
+            const subsection = element.closest(".subsection");
+            if (subsection) {
+              subsection.classList.add("active");
+              subsection.closest(".section")?.classList.add("active");
+            } else if (element.classList.contains("section-title")) {
+              element.closest(".section")?.classList.add("active");
+            }
+
+            if (!firstMatchElement) {
+              firstMatchElement = element;
+            }
+          }
+        });
+
+        if (firstMatchElement) {
+          requestAnimationFrame(() => {
+            firstMatchElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        } else if (searchTerm.length >= 3) {
+          alert("No se encontraron resultados para: " + searchTerm);
+        }
+      }
+
+      const debouncedSearch = debounce(searchContent, 300);
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        clearBtn.style.display = this.value.length > 0 ? "block" : "none";
+        debouncedSearch();
+      });
+
+      document.getElementById("searchInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          clearTimeout(this._timeoutId);
+          searchContent();
+        }
+      });
+
+      // --- Lógica del Header Compacto ---
+      const header = document.querySelector(".header");
+      const headerSpacer = document.querySelector(".header-spacer");
+      let initialHeaderHeight = 0; // Altura del header original
+      let compactHeaderHeight = 0; // Altura del header en modo compacto
+      let scrollTriggerPoint = 0; // Punto de scroll para activar el cambio
+
+      function handleHeaderState() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollY > scrollTriggerPoint) {
+          if (!header.classList.contains("compact")) {
+            header.classList.add("compact");
+            headerSpacer.style.height = `${initialHeaderHeight}px`;
+          }
+        } else {
+          if (header.classList.contains("compact")) {
+            header.classList.remove("compact");
+            headerSpacer.style.height = "0px";
+          }
+        }
+      }
+
+      function initializeHeader() {
+        initialHeaderHeight = header.offsetHeight;
+        const headerClone = header.cloneNode(true);
+        headerClone.classList.add("compact");
+        headerClone.style.visibility = "hidden";
+        headerClone.style.position = "absolute";
+        document.body.appendChild(headerClone);
+        compactHeaderHeight = headerClone.offsetHeight;
+        document.body.removeChild(headerClone);
+
+        scrollTriggerPoint = initialHeaderHeight - compactHeaderHeight;
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeHeader);
+      window.addEventListener("scroll", handleHeaderState);
+      window.addEventListener("resize", debounce(initializeHeader, 200));
+    </script>
+  </body>
+</html>

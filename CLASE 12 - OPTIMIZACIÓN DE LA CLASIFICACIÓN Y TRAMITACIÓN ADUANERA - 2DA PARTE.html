@@ -1,0 +1,1366 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <style>
+      /* Estilos de balanceo de texto */
+      .header-content-box,
+      .header-compact-title,
+      .footer,
+      .section-title,
+      .subsection-title {
+        text-wrap: balance;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      :root {
+        /* Colores Principales del Diseño (Acentos y Degradados) */
+        /* ======================================================= */
+        --color-principal: #00beff; /* Cian Brillante para acentos, bordes y el inicio del degradado principal */
+        --color-secundario: #1e50cd; /* Azul Medio, parte final del degradado de acento */
+
+        /* Fondos Oscuros de la Interfaz */
+        /* ======================================================= */
+        --fondo-oscuro-claro: #002a52; /* Fondo de secciones y contenido */
+        --fondo-oscuro-fuerte: #001a33; /* Fondo del encabezado (header) y pie de página (footer) */
+        /* ======================================================= */
+        --fondo-oscuro-medio: #003366; /* Fondo de encabezados y cajas de contenido */
+        --fondo-borde-claro: #004080; /* Bordes ligeros y color de fondo al hacer hover en encabezados */
+        --fondo-sombra-azul-header: #0050a0; /* ¡NUEVO! Sombra en el header */
+
+        /* Colores de Texto y Fondo General del Body */
+        /* ======================================================= */
+        --texto-blanco-1: #ffffff; /* Blanco puro para títulos y texto en fondo muy oscuro */
+        --texto-claro-2: #e6e6e6; /* Texto principal y claro */
+        --texto-medio-3: #cccccc; /* Texto de contenido de item (un poco más tenue) */
+
+        /* ======================================================= */
+        --fondo-body-inicio: #99e5ff; /* Color de inicio del degradado de fondo del body */
+        --fondo-body-fin: #a5b9eb; /* Color de final del degradado de fondo del body */
+
+        /* Colores de Acento Específicos (YouTube, Búsqueda) */
+        /* ======================================================= */
+        --rojo-youtube-claro: #e60000;
+        --rojo-youtube-fuerte: #a30000;
+        --timestamp-youtube: #ffcccc;
+        --fondo-resaltado: #00c339; /* Verde para el fondo del texto buscado */
+
+        /* Bases RGB para Transparencias (RGBA) */
+        /* ======================================================= */
+        --sombra-rgb: 0, 0, 0; /* Negro puro: Usado para sombras generales y profundidad */
+        --acento-rgb: 0, 190, 255; /* Cian Brillante: Usado para brillos y sombras de acento */
+        --rojo-rgb: 230, 0, 0; /* Rojo Puro: Usado para sombras de enlaces de YouTube */
+        /* ======================================================= */
+        --gradient-principal: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--fondo-body-inicio) 0%, var(--fondo-body-fin) 100%);
+        line-height: 1.2;
+        scroll-behavior: smooth;
+      }
+
+      strong#tituloDiplomado {
+        font-weight: 900;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @keyframes slideDownSutil {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header.animacion-inicial {
+        animation: slideDownSutil 0.4s ease-out 1;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        box-shadow: 0 5px 15px rgba(var(--sombra-rgb), 0.5);
+        text-align: center;
+        will-change: transform;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header-text-box {
+        display: grid;
+        gap: 10px;
+        word-break: break-word;
+        margin: 0 15px;
+      }
+
+      .header.compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+      }
+
+      .header-spacer {
+        display: none;
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header.compact + .header-spacer {
+        display: block;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .header.compact .header-top {
+        display: none;
+      }
+
+      .logo {
+        width: 140px;
+        height: auto;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+      }
+
+      .header.compact .logo {
+        width: 90px;
+        margin: 0 10px;
+      }
+
+      .header .logo.compact-logo {
+        display: none;
+      }
+
+      .header.compact .logo.compact-logo {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 900;
+      }
+
+      .header.compact h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+      }
+
+      .header-content-box {
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 20px 20px;
+        box-shadow: 0 8px 20px rgba(var(--acento-rgb), 0.6);
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        opacity: 1;
+        transform: translateY(0);
+        will-change: transform;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .header-content-box {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: 0;
+        transform: translateY(-10px);
+      }
+
+      .header-content-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(var(--acento-rgb), 0.8);
+      }
+
+      .header-bottom-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header-second-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header.compact .header-bottom-row {
+        flex-grow: 1;
+      }
+
+      .logo-and-title {
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .logo-and-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .header.compact .header-bottom-row .logo-and-title {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        gap: 10px;
+      }
+
+      .header.compact .header-bottom-row .logo-and-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .header-compact-title {
+        display: none;
+        color: var(--texto-blanco-1);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 10px;
+        white-space: normal;
+      }
+
+      .header.compact .header-compact-title {
+        display: block;
+      }
+
+      .search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--fondo-oscuro-medio);
+        border: 2px solid var(--fondo-borde-claro);
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(var(--sombra-rgb), 0.25);
+        will-change: border-color, background-color;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+
+      .search-bar:focus-within {
+        border-color: var(--fondo-sombra-azul-header);
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .clear-search {
+        cursor: pointer;
+        color: var(--texto-claro-2);
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        display: none;
+        transition: color 0.2s ease;
+        transform: scale(1.5);
+      }
+
+      .clear-search:hover {
+        color: var(--texto-blanco-1);
+      }
+
+      .search-bar input {
+        flex-grow: 1;
+        padding: 10px 18px;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--texto-claro-2);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        min-width: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header.compact .search-bar input {
+        padding: 10px 20px;
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-button {
+        background: var(--gradient-principal);
+        border: none;
+        color: var(--texto-blanco-1);
+        padding: 8px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        will-change: transform;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        max-width: 150px;
+        white-space: normal;
+      }
+
+      .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .search-bar .action-button {
+        margin: 5px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes fadeInUpContent {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .mind-map {
+        transition: margin-top 0.4s ease;
+        margin: 50px 0;
+      }
+
+      .mind-map.animacion-contenido {
+        animation: fadeInUpContent 0.4s ease-out 1 forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background-color: var(--fondo-oscuro-claro);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-oscuro-medio);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(var(--sombra-rgb), 0.25);
+        transition: border-color 0.3s ease;
+      }
+
+      .section-header {
+        padding: 20px;
+        background-color: var(--fondo-oscuro-medio);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .section-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 15px;
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        color: var(--texto-claro-2);
+        will-change: transform;
+        transition: transform 0.3s ease;
+      }
+
+      .section.active > .section-header .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .section.active .section-content {
+        max-height: fit-content;
+        padding-bottom: 10px;
+        opacity: 1;
+      }
+
+      .subsection {
+        margin: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-borde-claro);
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .subsection:hover {
+        border-color: var(--fondo-sombra-azul-header);
+      }
+
+      .subsection:hover .subsection-header {
+        background-color: var(--fondo-sombra-azul-header);
+      }
+
+      .section:hover {
+        border-color: var(--fondo-borde-claro);
+      }
+
+      .section:hover .section-header {
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .subsection-header {
+        padding: 15px;
+        background-color: var(--fondo-borde-claro);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .subsection-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .subsection-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .subsection-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--fondo-oscuro-claro);
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .subsection.active .subsection-content {
+        max-height: fit-content;
+        padding: 15px;
+        opacity: 1;
+      }
+
+      .subsection.active .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .content-item {
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border-left: 4px solid var(--color-principal);
+        box-shadow: 0 1px 5px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .content-text {
+        color: var(--texto-medio-3);
+        margin-bottom: 5px;
+        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 500;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .content-text::before {
+        content: "•";
+        color: var(--color-principal);
+        font-weight: 700;
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+      }
+
+      .youtube-link {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, var(--rojo-youtube-claro) 0%, var(--rojo-youtube-fuerte) 100%);
+        color: var(--texto-blanco-1);
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(var(--rojo-rgb), 0.4);
+        will-change: transform;
+      }
+
+      .youtube-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 7.5px rgba(var(--rojo-rgb), 0.5);
+        will-change: transform;
+      }
+
+      .timestamp {
+        color: var(--timestamp-youtube);
+        font-size: 0.85rem;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+
+      .highlight {
+        background-color: var(--fondo-resaltado);
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+        padding: 4px;
+        border-radius: 6px;
+      }
+
+      .footer {
+        padding: 30px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        border-top: 1px solid var(--fondo-oscuro-medio);
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .footer-text {
+        color: var(--texto-claro-2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+        }
+
+        .logo {
+          margin: 0;
+        }
+
+        .header-text-box {
+          margin: 0;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
+        }
+
+        .header.compact .header-bottom-row .logo-and-title {
+          gap: 5px;
+        }
+        .logo,
+        .footer-logo {
+          width: 105px;
+        }
+
+        .header.compact .header-bottom-row {
+          flex-direction: column;
+        }
+
+        .header.compact .header-compact-title {
+          margin: 0 5px;
+          font-size: 0.8rem;
+        }
+
+        .header.compact .logo.compact-logo {
+          width: 65px;
+          margin: 5px;
+        }
+
+        .action-button,
+        .search-bar input,
+        .clear-search {
+          font-size: 0.9rem;
+        }
+
+        .section-header {
+          padding: 15px;
+        }
+
+        .header.compact .controls {
+          flex-direction: row;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .subsection-title {
+          font-size: 1rem;
+        }
+        .section-number,
+        .subsection-number {
+          font-size: 13px;
+        }
+
+        .content-text {
+          font-size: 0.9rem;
+        }
+
+        .youtube-link {
+          font-size: 0.8rem;
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+        }
+
+        .header.compact .action-button {
+          padding: 6px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header animacion-inicial">
+      <div class="header-content-box">
+        <div class="header-top">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo" />
+          </a>
+          <div class="header-text-box">
+            <h1>
+              <div>DIPLOMADO DE ALTA ESPECIALIZACIÓN EN</div>
+              <strong id="tituloDiplomado" style="display: block"></strong>
+            </h1>
+            <p id="tituloPrincipal"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-bottom-row">
+        <div class="logo-and-title">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo compact-logo" />
+          </a>
+          <span class="header-compact-title" id="tituloCompacto"></span>
+        </div>
+        <div class="header-second-row">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar en el resumen interactivo…" autocomplete="off" />
+            <div class="search-actions">
+              <span class="clear-search" onclick="clearSearch()">&times;</span>
+              <button class="action-button" onclick="searchContent()">Buscar</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="action-button" onclick="expandAll()">Mostrar todo</button>
+            <button class="action-button" onclick="collapseAll()">Colapsar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="container">
+      <div class="mind-map animacion-contenido" id="mindMap">
+        <div class="section" data-section="1">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">1</span>
+              <span class="section-title">Introducción y objetivos de la sesión</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.1</span>
+                  <span class="subsection-title">Presentación del profesor y objetivos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Saludo inicial y control de la sesión: Profesor Alan Rosa Pérez asume la clase y agradece soporte técnico. Duración de la sesión y break informado por el moderador.</div>
+                  <div class="content-text">Objetivos principales anunciados: Revisar depósito aduanero y procedimiento de despacho. Tratar infracciones, sanciones y delitos aduaneros.</div>
+                  <div class="content-text">Materiales y trabajos: Profesor menciona material adicional sobre casos y partidas de SUNAT pendiente. Consulta sobre estado de trabajos y disponibilidad del material para desarrollar ejercicios.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=610" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:10:10)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="2">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">2</span>
+              <span class="section-title">Conceptos y actores del comercio exterior</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.1</span>
+                  <span class="subsection-title">Operadores y roles</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">OCE y OI: definiciones y diferencias: OCE: operadores de comercio exterior (entidades directamente involucradas). OI: operadores intervinientes (facilitadores como transportistas y agentes).</div>
+                  <div class="content-text">Actores específicos y funciones: Transportistas principales y navieras (Ej.: Evergreen) responsables del transporte internacional. Agentes de carga internacional organizan y gestionan transporte y relaciones con navieras.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=997" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:16:37)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.2</span>
+                  <span class="subsection-title">Instalaciones y otros participantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Almacén aduanero y despachadores: Almacén aduanero: lugar autorizado para almacenamiento bajo control aduanero. Despachador de aduana: profesional o empresa que realiza trámites de importación/exportación.</div>
+                  <div class="content-text">Empresas de mensajería y operadores de puerto: Empresas tipo DHL o SERPOST manejan procesos aduaneros simplificados para paquetería. Concesionarios portuarios (ej.: Tizur en Matarani) administran instalaciones y están supervisados por Autoridad Portuaria Nacional.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=1121" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:18:41)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="3">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">3</span>
+              <span class="section-title">Manejo operativo, mercancías especiales y fiscalización</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.1</span>
+                  <span class="subsection-title">Tipos de carga y condiciones de almacenamiento</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Clasificación de carga: Carga a granel: líquidos, sólidos o secos transportados sin empaquetar (granos, minerales, petróleo). Carga unitarizada: paletización y contenerización para facilitar manipulación (FCL/LCL). Depósito flotante: ubicados en buques o artefactos navales.</div>
+                  <div class="content-text">Mercancías perecibles y deterioradas: Perecibles requieren condiciones de temperatura y monitoreo (ej.: contenedores reefer, lecturas remotas). Mercancía deteriorada: afectación física que puede implicar análisis y responsabilidad en nacionalización.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=1449" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:24:09)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.2</span>
+                  <span class="subsection-title">Procedimientos de control, manifiestos y documentación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Manifiesto de carga y documentación asociada: Mercancías para depósito deben figurar en un solo manifiesto de carga para identificación rápida. GET (guía de entrega de documentos) como registro de entrega de documentos en trámites de despacho.</div>
+                  <div class="content-text">Despacho aduanero de importación y exportación: Despacho de importación: nacionalizar mercancía para comercializar dentro del país. Despacho de exportación: trámites para que mercancía salga del territorio nacional hacia buque o medio de transporte.</div>
+                  <div class="content-text">Control de la autoridad y potestad aduanera en la práctica: Facultades para inspeccionar, exigir documentos, cobrar tributos, investigar fraudes y sancionar incumplimientos.</div>
+                  <div class="content-text">Operación práctica y coordinación logística: Agente de aduana debe garantizar la entrega de la mercancía al punto solicitado por el cliente o coordinar con el transportista designado. Evaluar costos totales: diferencia entre cotizaciones puede incluir entrega en almacén en Lima vs. recogida en aduana y transporte posterior a destino (ej.: Arequipa). Recomendación: negociar plazos de nacionalización, fecha de levante y condiciones de entrega con el agente; considerar transportista local para recogidas y ahorro de costos.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=3124" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:52:04)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="4">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">4</span>
+              <span class="section-title">Depósito aduanero: definiciones, plazos y modalidades</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.1</span>
+                  <span class="subsection-title">Definición y finalidad del régimen</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Qué es el depósito aduanero: Régimen que permite almacenar mercancías en depósito aduanero por tiempo específico sin nacionalizarlas. Asociado mayormente a importaciones y facilita manejo de lotes parciales.</div>
+                  <div class="content-text">Relación con destinación aduanera y potestad aduanera: Destinación aduanera: manifestación de voluntad del declarante para acogerse a un régimen. Potestad aduanera: facultades de la autoridad para controlar entrada/salida, inspeccionar y sancionar.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=1603" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:26:43)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.2</span>
+                  <span class="subsection-title">Sujetos, plazos y requisitos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Depositante y depositario: Depositante: dueño o consignatario que vincula mercancía al depósito. Depositario: responsable autorizado del depósito bajo control aduanero.</div>
+                  <div class="content-text">Plazos máximos y condiciones especiales: Plazo máximo autorizado: 12 meses desde la numeración de la declaración (DAN). Para mercancías perecibles el plazo no puede exceder la fecha de vencimiento; ejemplo: productos farmacéuticos con control entre 2 y 8 °C.</div>
+                  <div class="content-text">Requisitos formales: RUC en condición de habido y consignación en un solo manifiesto de carga. No permitir que una misma declaración tenga distintos consignatarios para simplificar control.</div>
+                  <div class="content-text">Uso estratégico del régimen: Permite a importadores con limitación financiera nacionalizar parcial y progresivamente la mercancía. Retiro parcial mensual o en plazos (ej.: nacionalizar 1.000 de 12.000 unidades) para vender y financiar posteriores retiradas. Beneficio operativo y financiero para primeras importaciones o flujos estacionales.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=2410" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:40:10)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.3</span>
+                  <span class="subsection-title">Modalidades de despacho y mercancías restringidas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Modalidades del trámite de depósito aduanero: Despacho anticipado: tramitación antes de la llegada del medio de transporte para agilizar levante. Despacho diferido: tramitación después de la llegada, útil para confirmar detalles de carga. Urgente: antes de la llegada y hasta 7 días calendario tras término de descarga.</div>
+                  <div class="content-text">Mercancías que no pueden acogerse al régimen: Mercancías ya destinadas a otro régimen (consumo, tránsito, admisión temporal). Prohibidas por ley, explosivos, armas y municiones, equipajes/menajes, vehículos que no cumplan requisitos técnicos.</div>
+                  <div class="content-text">Abandono legal y voluntario: Abandono legal: incumplimiento de plazos o trámites que deriva en disposición aduanera. Abandono voluntario: titular renuncia por costos o restricciones; mercancía pasa a depósito aduanero para disposición final.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=2990" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:49:50)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="5">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">5</span>
+              <span class="section-title">Infracciones, sanciones aduaneras</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.1</span>
+                  <span class="subsection-title">Distinción conceptual y ejemplos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Diferencia entre infracción y delito: Infracción: actos u omisiones que violan normativa aduanera, generalmente sancionados con multas o sanciones administrativas. Delito: conducta grave que infringe la ley penal (ej.: contrabando, ingreso de mercancías prohibidas) y genera responsabilidad penal.</div>
+                  <div class="content-text">Ejemplos de infracciones comunes: Declaraciones incorrectas, omisión de pago de tributos, incumplimiento de plazos, no presentar documentos requeridos. Errores en clasificación arancelaria o documentación ilegible que generan observaciones y sanciones administrativas.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=3382" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:56:22)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.2</span>
+                  <span class="subsection-title">Principios, potestades y características de las infracciones</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Potestad punitiva y potestad aduanera: Administración aduanera aplica la legislación y tiene capacidad punitiva según artículo 189 de la Ley General de Aduanas. Potestad aduanera engloba facultades de control, inspección, sanción y medidas cautelares.</div>
+                  <div class="content-text">Principios que rigen las sanciones: Irretroactividad: la ley vigente al momento del hecho es la aplicable; excepción si la nueva norma es más favorable (retroactividad benigna). Tipicidad y legalidad: infracciones deben estar previstas de forma clara y no pueden crearse por interpretación extensiva. Objetividad de la prueba: las infracciones deben demostrarse con hechos verificables, no suposiciones.</div>
+                  <div class="content-text">Consecuencias habituales: Desembocan en sanción: multas, comisos, suspensiones, cancelaciones e inhabilitaciones según gravedad.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=4969" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:22:49)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.3</span>
+                  <span class="subsection-title">Supuestos no sancionables, rectificaciones y atenuantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Supuestos no sancionables: Errores de transcripción o codificación: fallos formales verificables que pueden presumirse de buena fe y ser subsanados. Caso fortuito o fuerza mayor: eventos extraordinarios no imputables (Artículo 19).</div>
+                  <div class="content-text">Rectificaciones y plazos: Despacho anticipado permite rectificaciones dentro de 15 días calendarios tras término de descarga sin multa, salvo casos específicos del reglamento. Recuperación tras levante: si el consignatario encuentra mercancía mayor o distinta, puede pagar la deuda tributaria y recargos en vez de sufrir sanción, si se sustenta adecuadamente. Reembarque con multa: alternativa para mercancía no declarada descubierta en reconocimiento físico; plazo de 30 días para reembarque y reducir sanción o evitar comiso.</div>
+                  <div class="content-text">Atenuantes y agravantes: Atenuantes: subsanación voluntaria, ausencia de dolo, certificación OEA (Operador Económico Autorizado) y cooperación. Agravantes: intencionalidad, reincidencia, mayor perjuicio económico, afectación del control aduanero. Proporcionalidad y graduación: la autoridad puede ajustar sanciones dentro de rangos para asegurar proporcionalidad.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=5488" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:31:28)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.4</span>
+                  <span class="subsection-title">Clasificación de sujetos, tabla de sanciones y sanciones específicas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Sujetos de las infracciones: Operadores de comercio exterior, operadores intervinientes y terceros regulados por la Ley General de Aduanas. Triple clasificación asigna obligaciones y sanciones diferenciadas según rol.</div>
+                  <div class="content-text">Tabla de sanciones y principios de aplicación: Infracciones codificadas en tabla con códigos y rangos; principio de especialidad limita ámbito de aplicación por tipo de operador.</div>
+                  <div class="content-text">Sanciones posibles y montos referenciales: Multas pecuniarias expresadas en dólares o moneda nacional; pago según tipo de cambio de la fecha. Comiso: privación definitiva de la propiedad de la mercancía; pérdida total como sanción. Suspensión: paralización temporal de autorización para operar (supuestos limitados, p. ej. incumplimiento de garantía). Cancelación: retiro definitivo de la autorización (categoría muy grave). Inhabilitación: limitación para ejercer actividades (pocos supuestos actualmente). Multas por presentar declaración no autorizada: hasta 20 UITs (UIT a la fecha referida en sesión = S/ 5,350).</div>
+                  <div class="content-text">Comiso y multa posterior: Si la mercancía o medio de transporte no son hallados al decretarse el comiso, se impone multa adicional igual al valor FOB de la mercancía. Obligación de entrega de mercancía a la autoridad; incumplimiento genera multa.</div>
+                  <div class="content-text">Modificaciones normativas y efectos: Cambios recientes: adición de supuestos no sancionables, flexibilización para categorías (p. ej. A), eliminación del régimen de incentivos por distorsiones, y generalización de criterios para sanciones graves. Efecto mixto: algunas modificaciones benefician y otras endurecen sanciones; revisar caso por caso.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=7202" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:54:41)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="6">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">6</span>
+              <span class="section-title">Procedimientos operativos y recomendaciones prácticas</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.1</span>
+                  <span class="subsection-title">Coordinación con agentes y transportistas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Roles y responsabilidades operativas: Agente de aduana: nacionalizar la mercancía y coordinar entrega en el punto solicitado por el cliente. Transportista: recoger la mercancía en el punto indicado por el agente (aduana o almacén) y llevarla al destino final.</div>
+                  <div class="content-text">Evaluación de cotizaciones y ahorro de costos: Comparar cotizaciones que incluyan entrega en almacén vs. recogida en aduana; diferenciales pueden deberse a servicios adicionales (seguridad, flete interno). Considerar costos de transporte interno (ej.: Lima a Arequipa) al decidir entre pagar entrega hasta almacén o recoger en aduana.</div>
+                  <div class="content-text">Negociación y verificación: Solicitar al agente garantías sobre fecha de nacionalización, día de levante y lugar de entrega. Verificar experiencia y confiabilidad del agente para evitar cobros excesivos o problemas operativos. Negociar que el agente entregue la carga al transportista designado para reducir costos.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=3602" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:00:02)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.2</span>
+                  <span class="subsection-title">Casos prácticos y decisiones del importador</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Opciones del importador ante dos cotizaciones: Pagar más para que agente deje la mercancía en almacén en Lima y gestionar transporte doméstico después. Ahorrar pagando menos y organizar recogida en aduana con transportista propio, evaluando capacidad y costos de trayecto.</div>
+                  <div class="content-text">Consideraciones operacionales: Confirmar que la mercancía esté nacionalizada y con levante antes de desplazarla. Coordinar con transportista local que tenga experiencia en ingresar a instalaciones aduaneras si se opta por recoger directamente. Documentar acuerdos y fechas para evitar disputas y retrasos.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=3786" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:03:06)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="7">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">7</span>
+              <span class="section-title">Delitos aduaneros</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.1</span>
+                  <span class="subsection-title">Delitos aduaneros: tipos, penas y agravantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Concepto y gravedad: Delitos aduaneros: conductas dolosas que vulneran normas del comercio exterior y requieren proceso jurisdiccional penal. Procedimiento distinto: infracciones se ventilan administrativamente; delitos son investigados por Ministerio Público y juzgados por el Poder Judicial.</div>
+                  <div class="content-text">Contrabando y contrabando fraccionado: Contrabando: Ingreso o salida ilegal de mercancías eludiendo el control aduanero para evadir impuestos y aranceles. Fraccionamiento: Estrategia de dividir operaciones en montos pequeños para evitar umbrales penales; la suma sistemática de estas acciones constituye delito.</div>
+                  <div class="content-text">Defraudación de rentas aduaneras: Mecanismo: Uso de engaños, documentos falsos o abuso de franquicias para dejar de pagar tributos total o parcialmente. Sanción: Penas de prisión de 5 a 8 años y multas de 365 a 730 días-multa, dependiendo de la gravedad del caso.</div>
+                  <div class="content-text">Tráfico de mercancías prohibidas y restringidas: Definición: Introducción o extracción sin autorización de productos vetados o regulados, con penas de 8 a 12 años de cárcel. Agravantes: La sanción aumenta según la peligrosidad (armas, explosivos) o el riesgo para la salud pública y el medio ambiente.</div>
+                  <div class="content-text">Modos y conductas asociadas: Falsificación: Alteración de valor, origen, marcas o subpartidas y uso de documentos adulterados para obtener beneficios tributarios. Ocultamiento: Uso de transportes modificados, domicilios falsos y utilización de menores de edad para evadir la fiscalización.</div>
+                  <div class="content-text">Responsabilidad de personas jurídicas y organización criminal: Empresas pueden ser investigadas y sancionadas cuando se utilizan estructuras societarias para cometer delitos; se investigan gerencia y directivos. Participación de funcionarios públicos, fuerzas del orden o estructuras organizadas agrava la tipificación y las penas.</div>
+                  <div class="content-text">Umbrales y criterios de tipificación: Límites: El valor de la mercancía (generalmente medido en UIT) y la gravedad cualitativa (falsedad) definen si es infracción o delito. Sistematicidad: La autoridad rastrea conductas reiteradas para identificar delitos que, individualmente, parecerían simples faltas administrativas.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=7202" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:00:02)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="8">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">8</span>
+              <span class="section-title">Cierre y próximos pasos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.1</span>
+                  <span class="subsection-title">Pausa y retomos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Break anunciado de cinco minutos: Invitación a estudiantes para retomar con segunda parte hasta el final de la sesión.</div>
+                  <div class="content-text">Seguimiento de consultas: Profesor invita a continuar consultas sobre casos prácticos y a revisar resultados de negociaciones entre importadores y agentes de aduana.</div>
+                  <div class="content-text">Clausura y asistencia: Compartición del link de asistencia y agradecimientos finales. Recordatorio de completar asistencia antes de retirarse y anuncio de próxima sesión.</div>
+                  <a href="https://www.youtube.com/watch?v=SODCDxhbwag&start=4447" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:14:07)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="https://www.edumin.pe/" target="_blank">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="footer-logo" />
+      </a>
+      <p class="footer-text">
+        <span style="display: block; font-weight: bold">Contenido desarrollado por EDUMIN - Centro de Capacitación Especializado en Minería, Industria y Negocios</span>
+        <span style="display: block; font-style: italic">Material exclusivo para estudiantes de EDUMIN</span>
+        <a href="https://www.edumin.pe/" target="_blank" style="color: var(--color-principal); text-decoration: none; display: block">https://www.edumin.pe/</a>
+      </p>
+    </div>
+
+    <script>
+      const TITULO_DIPLOMADO = "ESPECIALISTA EN COMERCIO INTERNACIONAL: GESTIÓN ADUANERA Y LOGÍSTICA".toUpperCase();
+      const TITULO_CLASE = "CLASE 12: OPTIMIZACIÓN DE LA CLASIFICACIÓN Y TRAMITACIÓN ADUANERA - 2DA PARTE".toUpperCase();
+
+      const elementoDiplomado = document.getElementById("tituloDiplomado");
+      if (elementoDiplomado) {
+        elementoDiplomado.innerText = TITULO_DIPLOMADO;
+      }
+
+      document.title = TITULO_CLASE;
+      const tituloPrincipal = document.getElementById("tituloPrincipal");
+      if (tituloPrincipal) {
+        tituloPrincipal.innerText = TITULO_CLASE;
+      }
+
+      const tituloCompacto = document.getElementById("tituloCompacto");
+      if (tituloCompacto) {
+        tituloCompacto.innerText = TITULO_CLASE;
+      }
+
+      function toggleSection(element) {
+        const section = element.closest(".section");
+        const wasActive = section.classList.contains("active");
+
+        section.classList.toggle("active");
+
+        if (wasActive) {
+          const subsections = section.querySelectorAll(".subsection");
+          subsections.forEach((subsection) => {
+            subsection.classList.remove("active");
+          });
+        }
+      }
+
+      function toggleSubsection(element) {
+        const subsection = element.closest(".subsection");
+        subsection.classList.toggle("active");
+      }
+
+      function expandAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.add("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.add("active");
+        });
+      }
+
+      function collapseAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.remove("active");
+        });
+      }
+
+      function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, delay);
+        };
+      }
+
+      function clearSearch() {
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchContent();
+        searchInput.focus();
+      }
+
+      const createDiacriticInsensitiveRegex = (term) => {
+        const charMap = {
+          a: "[aáAÁ]",
+          e: "[eéEÉ]",
+          i: "[iíIÍ]",
+          o: "[oóOÓ]",
+          u: "[uúUÚ]",
+        };
+
+        const regexString = term
+          .split("")
+          .map((char) => {
+            const lowerChar = char.toLowerCase();
+            return charMap[lowerChar] || char;
+          })
+          .join("");
+
+        return new RegExp(`(${regexString})`, "gi");
+      };
+
+      function searchContent() {
+        const inputElement = document.getElementById("searchInput");
+        const searchTerm = inputElement.value.trim();
+
+        const searchableElements = document.querySelectorAll(".content-text, .section-title, .subsection-title");
+        let found = false;
+        let firstMatchElement = null;
+
+        document.querySelectorAll(".section.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".subsection.active").forEach((el) => el.classList.remove("active"));
+        searchableElements.forEach((element) => {
+          element.innerHTML = element.getAttribute("data-original-text") || element.textContent;
+        });
+
+        if (searchTerm.length < 3) {
+          return;
+        }
+
+        const searchRegex = createDiacriticInsensitiveRegex(searchTerm);
+
+        searchableElements.forEach((element) => {
+          const originalText = element.getAttribute("data-original-text") || element.textContent;
+
+          if (searchRegex.test(originalText)) {
+            found = true;
+
+            element.innerHTML = originalText.replace(searchRegex, `<span class="highlight">$1</span>`);
+
+            const subsection = element.closest(".subsection");
+            if (subsection) {
+              subsection.classList.add("active");
+              subsection.closest(".section")?.classList.add("active");
+            } else if (element.classList.contains("section-title")) {
+              element.closest(".section")?.classList.add("active");
+            }
+
+            if (!firstMatchElement) {
+              firstMatchElement = element;
+            }
+          }
+        });
+
+        if (firstMatchElement) {
+          requestAnimationFrame(() => {
+            firstMatchElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        } else if (searchTerm.length >= 3) {
+          alert("No se encontraron resultados para: " + searchTerm);
+        }
+      }
+
+      const debouncedSearch = debounce(searchContent, 300);
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        clearBtn.style.display = this.value.length > 0 ? "block" : "none";
+        debouncedSearch();
+      });
+
+      document.getElementById("searchInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          clearTimeout(this._timeoutId);
+          searchContent();
+        }
+      });
+
+      // --- Lógica del Header Compacto ---
+      const header = document.querySelector(".header");
+      const headerSpacer = document.querySelector(".header-spacer");
+      let initialHeaderHeight = 0; // Altura del header original
+      let compactHeaderHeight = 0; // Altura del header en modo compacto
+      let scrollTriggerPoint = 0; // Punto de scroll para activar el cambio
+
+      function handleHeaderState() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollY > scrollTriggerPoint) {
+          if (!header.classList.contains("compact")) {
+            header.classList.add("compact");
+            headerSpacer.style.height = `${initialHeaderHeight}px`;
+          }
+        } else {
+          if (header.classList.contains("compact")) {
+            header.classList.remove("compact");
+            headerSpacer.style.height = "0px";
+          }
+        }
+      }
+
+      function initializeHeader() {
+        initialHeaderHeight = header.offsetHeight;
+        const headerClone = header.cloneNode(true);
+        headerClone.classList.add("compact");
+        headerClone.style.visibility = "hidden";
+        headerClone.style.position = "absolute";
+        document.body.appendChild(headerClone);
+        compactHeaderHeight = headerClone.offsetHeight;
+        document.body.removeChild(headerClone);
+
+        scrollTriggerPoint = initialHeaderHeight - compactHeaderHeight;
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeHeader);
+      window.addEventListener("scroll", handleHeaderState);
+      window.addEventListener("resize", debounce(initializeHeader, 200));
+    </script>
+  </body>
+</html>
